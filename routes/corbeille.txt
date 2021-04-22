@@ -1,0 +1,166 @@
+const countries = [
+    {
+        name : "Morocco",
+        code : 'MA',
+        dialcode : "+212",
+        curency : 'MAD',
+        povinces : [
+            {
+            name : "Sous-Massa",
+            cities : ["Agadir","Tiznit","Ouled Teima", "Taroudant"]
+            },
+            {
+            name : "Guelmim Oued Noun",
+            cities : ["Guelmim","Tantan","Essamara", "Assa","Ezag"]
+            },
+        ]
+    },
+    {
+        name : "Algeria",
+        povinces : [
+            {
+            name : "Adrar",
+            cities : [ "Bouda" , "Ouled Ahmed Timmi" ]
+            },
+            {
+            name : "",
+            cities : [ "N'Gaous", "Merouana", "Timgad"]
+            },
+        ]
+    },
+{
+    name : "Tunisie",
+    code : 'TN',
+    dialcode : "+216",
+    curency : 'Dinar',
+    povinces : [
+        {
+        name : "Ariana",
+        cities : ["La Soukra","Raoued","Kalâat el-Andalous","Sidi Thabet","Ettadhamen-Mnihla" ]
+        },
+        {
+        name : "Sfax",
+        cities : [ "Sakiet Ezzit","Chihia","Sakiet Eddaïer","Gremda","El Ain","Thyna","Agareb","Jebiniana","El Hencha","Menzel Chaker","Ghraïba","Bir Ali Ben Khélifa"]
+        },
+        {
+            name : "Sidi Bouzid",
+            cities : [ "Jilma","Cebalet","Bir El Hafey","Sidi Ali Ben Aoun","Menzel Bouzaiane","Meknassy","Mezzouna","Regueb","Ouled Haffouz"]
+            },
+    ]
+},
+
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/countries')
+.then(() => console.log("connected to mongoDB ..."))
+.catch (err => console.log("could not connected to mongoDB ", err));
+var Schema = mongoose.Schema;
+
+var CountrySchema = new Schema({
+    name : {type:String , required : true, lowercase : true},
+    code : {type:String , required : true, lowercase : true},
+    dialcode : {type:String , required : true, lowercase : true},
+    curency :  {type:String , required : true, lowercase : true},
+    provinces_id: [{type: Schema.Types.ObjectId, ref: 'Province'}],
+  });
+  
+  var ProvinceSchema = new Schema({
+    name: {type: String , required : true, lowercase : true},
+    cities_id: [{type: Schema.Types.ObjectId, ref: 'City'}],
+  });
+  
+  var CitySchema = new Schema({
+    name: {type: String , required : true, lowercase : true}
+  });
+var City = mongoose.model('city', CitySchema);
+var Province = mongoose.model('province', ProvinceSchema);
+var Country = mongoose.model('country', CountrySchema);
+
+
+//  function addCity(id){
+//     var city = new City({
+//         name: "Inzegan",
+//       });
+//       city.save( async (err) =>{
+//         if (err) return handleError(err);
+//         const province = await Province.findOne({_id : id} );
+//         var cities = province.cities_id;
+//         cities.push(city._id);
+//         const result = await Province.update({ _id: id }, {
+//             $set: { cities_id : cities }
+//             });
+//             console.log(result);
+//       });
+      
+// }
+
+// addCity("607701062a7d582fe49f81cb");
+
+
+
+
+
+// function addProvince(id){
+//     var province = new Province({
+//         name: 'Beja',
+//       });
+//       province.save( async (err) =>{
+//         if (err) return handleError(err);
+//         const country = await Country.findOne({_id : id} );
+//         var provinces = country.provinces_id;
+//         provinces.push(province._id);
+//         const result = await Country.update({ _id: id }, {
+//             $set: { provinces_id : provinces}
+//             });
+//             console.log(result);
+//       });
+      
+// }
+
+// addProvince("6076ff702698b13020633ba5");
+
+
+
+
+// function addCountry(){
+//     var country = new Country({
+//         name : "Tunisie",
+//     code : 'TN',
+//     dialcode : "+216",
+//     curency : 'Dinar',
+//         provinces_id : [],
+//       });
+//       country.save();
+      
+// }
+
+// addCountry();
+
+
+
+

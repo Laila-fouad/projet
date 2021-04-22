@@ -1,0 +1,23 @@
+###
+
+GET http://localhost:3000/api/country/ma/guelmim-oued-noun
+
+
+###
+GET  http://localhost:3000/api/country/
+
+###
+POST http://localhost:3000/api/country/
+
+{
+        "name": "france",
+        "code" : "fr",
+        "dialcode" : "+3300",
+        "curency" : "euro"   
+     }
+
+###
+DELETE http://localhost:3000/api/country/
+{
+        "id": "607eed11731ec539a4c3ad44"
+}   
